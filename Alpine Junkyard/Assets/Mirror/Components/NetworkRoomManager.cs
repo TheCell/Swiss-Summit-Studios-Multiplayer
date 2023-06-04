@@ -120,7 +120,7 @@ namespace Mirror
 
         void SceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
         {
-            Debug.Log($"NetworkRoom SceneLoadedForPlayer scene: {SceneManager.GetActiveScene().path} {conn}");
+            //Debug.Log($"NetworkRoom SceneLoadedForPlayer scene: {SceneManager.GetActiveScene().path} {conn}");
 
             if (Utils.IsSceneActive(RoomScene))
             {

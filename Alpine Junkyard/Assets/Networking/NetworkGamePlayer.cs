@@ -5,11 +5,9 @@ public class NetworkGamePlayer : NetworkBehaviour
 {
     public Color overlayColor = new Color(0, 0, 0, 0.5f);
 
-    [SerializeField]
-    private string displayName = "Missing Name";
+    [SyncVar][SerializeField] private string displayName = "Missing Name";
 
     public string DisplayName { get => displayName; }
-
 
     [Server]
     public void SetDisplayName(string displayName)
