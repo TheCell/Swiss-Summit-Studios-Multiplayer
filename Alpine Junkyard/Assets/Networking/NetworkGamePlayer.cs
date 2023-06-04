@@ -19,6 +19,13 @@ public class NetworkGamePlayer : NetworkBehaviour
     [SyncVar] public float _animationBlend;
     [SyncVar] public float _inputMagnitude;
 
+    [Command]
+    public void CmdUpdateAnimations(float animationBlend, float inputMagnitude)
+    {
+        _animationBlend = animationBlend;
+        _inputMagnitude = inputMagnitude;
+    }
+
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
     public void OnGUI()
     {

@@ -296,14 +296,13 @@ namespace StarterAssets
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
-            networkGamePlayer._animationBlend = _animationBlend;
-            networkGamePlayer._inputMagnitude = inputMagnitude;
-            // update animator if using character
-            //if (_hasAnimator)
-            //{
-            //    _animator.SetFloat(_animIDSpeed, _animationBlend);
-            //    _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
-            //}
+            // only update server with new vars for the player that is owning this
+            if (!networkGamePlayer.isLocalPlayer)
+            {
+                return;
+            }
+
+            networkGamePlayer.CmdUpdateAnimations(_animationBlend, inputMagnitude);
         }
 
         private void JumpAndGravity()
