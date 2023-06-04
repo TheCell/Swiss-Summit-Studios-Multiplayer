@@ -11,6 +11,16 @@ namespace Mirror
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-room-player")]
     public class NetworkRoomPlayer : NetworkBehaviour
     {
+        [SyncVar][SerializeField] private string displayName = "Missing Name";
+
+        public string DisplayName { get => displayName; }
+
+        [Server]
+        public void SetDisplayName(string displayName)
+        {
+            this.displayName = displayName;
+        }
+
         /// <summary>
         /// This flag controls whether the default UI is shown for the room player.
         /// <para>As this UI is rendered using the old GUI system, it is only recommended for testing purposes.</para>
@@ -151,7 +161,7 @@ namespace Mirror
         {
             GUILayout.BeginArea(new Rect(20f + (index * 100), 200f, 90f, 130f));
 
-            GUILayout.Label($"Player [{index + 1}]");
+            GUILayout.Label($"{displayName}");
 
             if (readyToBegin)
                 GUILayout.Label("Ready");

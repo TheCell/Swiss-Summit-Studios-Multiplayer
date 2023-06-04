@@ -1,4 +1,5 @@
-﻿ using UnityEngine;
+﻿using Unity.Mathematics;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -98,6 +99,8 @@ namespace StarterAssets
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
 
+        private NetworkGamePlayer? networkGamePlayer = null;
+
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
@@ -135,7 +138,14 @@ namespace StarterAssets
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
+            networkGamePlayer = GetComponent<NetworkGamePlayer>();
+            if (networkGamePlayer == null)
+            {
+                Debug.LogError("The NetworkGamePlayer script is missing. Animations are played through this");
+            }
+            Debug.Log($"networkGamePlayer.isOwned: {networkGamePlayer.isOwned}");
+
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
@@ -154,11 +164,26 @@ namespace StarterAssets
 
         private void Update()
         {
-            _hasAnimator = TryGetComponent(out _animator);
+            if (!_hasAnimator)
+            { 
+                _hasAnimator = TryGetComponent(out _animator);
+            }
 
             JumpAndGravity();
             GroundedCheck();
             Move();
+
+            if (_hasAnimator)
+            {
+                AnimateWalking();
+            }
+
+            // TODO implement properly
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
+            }
         }
 
         private void LateUpdate()
@@ -271,12 +296,14 @@ namespace StarterAssets
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
+            networkGamePlayer._animationBlend = _animationBlend;
+            networkGamePlayer._inputMagnitude = inputMagnitude;
             // update animator if using character
-            if (_hasAnimator)
-            {
-                _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
-            }
+            //if (_hasAnimator)
+            //{
+            //    _animator.SetFloat(_animIDSpeed, _animationBlend);
+            //    _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+            //}
         }
 
         private void JumpAndGravity()
@@ -375,7 +402,7 @@ namespace StarterAssets
             {
                 if (FootstepAudioClips.Length > 0)
                 {
-                    var index = Random.Range(0, FootstepAudioClips.Length);
+                    var index = UnityEngine.Random.Range(0, FootstepAudioClips.Length);
                     AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
                 }
             }
@@ -386,6 +413,22 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+            }
+        }
+
+        private void AnimateWalking()
+        {
+            // update animator if using character
+            if (_hasAnimator)
+            {
+                //if (networkGamePlayer)
+                //// todo send magnitude over network
+                //float speed = Vector3.Distance(transform.position, lastPos);
+                //lastPos = transform.position;
+                //speedFromLastFrame = speed > 0.01f ? 3f : 0f;
+
+                _animator.SetFloat(_animIDSpeed, networkGamePlayer._animationBlend);
+                _animator.SetFloat(_animIDMotionSpeed, networkGamePlayer._inputMagnitude);
             }
         }
     }

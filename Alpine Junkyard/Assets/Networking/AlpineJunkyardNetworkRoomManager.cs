@@ -46,6 +46,23 @@ public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
     /// <param name="conn">The new connection.</param>
     public override void OnRoomServerConnect(NetworkConnectionToClient conn) { }
 
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+    {
+        base.OnServerAddPlayer(conn);
+
+        var player = conn.identity.GetComponent<NetworkRoomPlayer>();
+        if (player != null)
+        {
+            var playerName = $"Player {numPlayers}";
+            player.SetDisplayName(playerName);
+            player.gameObject.name = $"{player.gameObject.name} ({playerName})";
+        }
+        else
+        {
+            Debug.Log("did not find NetworkPlayer");
+        }
+    }
+
     /// <summary>
     /// This is called on the server when a client disconnects.
     /// </summary>
@@ -56,7 +73,15 @@ public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
     /// This is called on the server when a networked scene finishes loading.
     /// </summary>
     /// <param name="sceneName">Name of the new scene.</param>
-    public override void OnRoomServerSceneChanged(string sceneName) { }
+    public override void OnRoomServerSceneChanged(string sceneName)
+    {
+        // TODO Handle in a manager in the final game
+        if (sceneName == "Networking_Offline")
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
+    }
 
     /// <summary>
     /// This allows customization of the creation of the room-player object on the server.
@@ -102,6 +127,10 @@ public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
     /// <returns>False to not allow this player to replace the room player.</returns>
     public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
     {
+        var networkGamePlayer = gamePlayer.GetComponent<NetworkGamePlayer>();
+        var networkRoomPlayer = roomPlayer.GetComponent<NetworkRoomPlayer>();
+        networkGamePlayer.SetDisplayName(networkRoomPlayer.DisplayName);
+        networkGamePlayer.gameObject.name = $"{networkGamePlayer.gameObject.name} ({networkRoomPlayer.DisplayName})";
         return base.OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer);
     }
 
