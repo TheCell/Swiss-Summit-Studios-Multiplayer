@@ -131,6 +131,7 @@ public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
         var networkRoomPlayer = roomPlayer.GetComponent<NetworkRoomPlayer>();
         networkGamePlayer.SetDisplayName(networkRoomPlayer.DisplayName);
         networkGamePlayer.gameObject.name = $"{networkGamePlayer.gameObject.name} ({networkRoomPlayer.DisplayName})";
+        SetPlayerColor(networkGamePlayer.gameObject);
         return base.OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer);
     }
 
@@ -197,6 +198,15 @@ public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
     public override void OnRoomClientSceneChanged() { }
 
     #endregion
+
+    private void SetPlayerColor(GameObject playerObject)
+    {
+        var playerColor = playerObject.GetComponentInChildren<PlayerColor>();
+        if (playerColor != null)
+        {
+            playerColor.SetPlayerColor(Random.ColorHSV(0, 1, 0.7f, 0.7f, 0.8f, 0.8f));
+        }
+    }
 
     #region Optional UI
 
