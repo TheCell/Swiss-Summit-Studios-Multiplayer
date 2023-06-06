@@ -1,9 +1,21 @@
 using Mirror;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class NetworkGamePlayer : NetworkBehaviour
 {
     public Color overlayColor = new Color(0, 0, 0, 0.5f);
+
+    public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+
+        var playerInput = GetComponent<PlayerInput>();
+        if (playerInput != null)
+        {
+            playerInput.enabled = true;
+        }
+    }
 
     [SyncVar][SerializeField] private string displayName = "Missing Name";
 
