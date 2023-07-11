@@ -29,5 +29,9 @@ public class SwissSummitStudiosMenuScripts
         }
 
         Debug.Log($"Switched to {roomManager.transport}");
+        EditorUtility.SetDirty(roomManager);
+        EditorUtility.SetDirty(kcpTransport);
+        EditorUtility.SetDirty(fizzySteamworks);
+        EditorUtility.SetDirty(steamManager);
     }
 }
