@@ -302,7 +302,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8627895943759086903}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3646554253524309772}
+        m_TargetAssemblyTypeName: LobbyMenu, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4623967716795452230
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,9 +615,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5907097272532941368}
-  - {fileID: 2353591230893316112}
+  - {fileID: 4160484034566593410}
   - {fileID: 4222929543333475826}
-  - {fileID: 3174789061179543338}
+  - {fileID: 3826860365551979684}
   - {fileID: 4344541447042305465}
   - {fileID: 620951798138653786}
   m_Father: {fileID: 8601654045962792307}
@@ -807,7 +819,7 @@ Transform:
   m_Children:
   - {fileID: 2708233990103060931}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3646554253524309772
 MonoBehaviour:
@@ -821,12 +833,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d01c9c132065d14195317f083b49b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  readyButton: {fileID: 3425274684592290126}
-  startButton: {fileID: 3754595289098147022}
   lobbyUI: {fileID: 923213076798072279}
   statusText: {fileID: 6287577503442315985}
-  playerList: {fileID: 5852680132946247651}
-  roomPlayerSlot: {fileID: 3269367997723288226, guid: f581af71ea63481438296f1555034005, type: 3}
 --- !u!1 &6502709770276188148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1083,7 +1091,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6618372479551371569}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3646554253524309772}
+        m_TargetAssemblyTypeName: LobbyMenu, Assembly-CSharp
+        m_MethodName: SetReadyState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7641677269804321553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1570,7 +1590,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f581af71ea63481438296f1555034005, type: 3}
---- !u!224 &2353591230893316112 stripped
+--- !u!224 &4160484034566593410 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1807246296723506061, guid: f581af71ea63481438296f1555034005, type: 3}
   m_PrefabInstance: {fileID: 2353591230893316111}
@@ -1888,7 +1908,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f581af71ea63481438296f1555034005, type: 3}
---- !u!224 &3174789061179543338 stripped
+--- !u!224 &3826860365551979684 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1807246296723506061, guid: f581af71ea63481438296f1555034005, type: 3}
   m_PrefabInstance: {fileID: 3174789061179543337}

@@ -16,15 +16,16 @@ public class LobbyMenu : MonoBehaviour
     [SerializeField] private TMP_Text? statusText = null;
     //[SerializeField] private GameObject playerList = null;
     //[SerializeField] private GameObject roomPlayerSlot = null;
+    private bool isReady = false;
 
-    //private List<AlpineJunkyardNetworkRoomPlayer> connectedPlayers = new List<AlpineJunkyardNetworkRoomPlayer>();
+    private List<AlpineJunkyardNetworkRoomPlayer> connectedPlayers = new List<AlpineJunkyardNetworkRoomPlayer>();
 
-    //private void Start()
-    //{
+    private void Start()
+    {
         //AlpineJunkyardNetworkRoomManager.OnRoomClientConnect
         //AlpineJunkyardNetworkRoomManager.ClientOnConnected += HandleClientConnected;
-        //UpdateStatusLabel();
-    //}
+        UpdateStatusLabel();
+    }
 
     //private void Update()
     //{
@@ -43,30 +44,27 @@ public class LobbyMenu : MonoBehaviour
 
     public void StartGame()
     {
-
     }
 
     public void SetReadyState()
     {
-        
+        isReady = !isReady;
+        NetworkClient.connection.identity.GetComponent<AlpineJunkyardNetworkRoomPlayer>().CmdChangeReadyState(isReady);
     }
 
     public void LeaveLobby()
     {
-        // stop host if host mode
+        // Host: stop host if host mode
         if (NetworkServer.active && NetworkClient.isConnected)
         {
             NetworkManager.singleton.StopHost();
         }
-        //else
-        //{
-        //    NetworkManager.singleton.StopClient();
-        //}
+        // Client
         else if (!NetworkServer.active && NetworkClient.isConnected)
         {
             NetworkManager.singleton.StopClient();
         }
-        // stop server if server-only
+        // Server: stop server if server-only
         else if (NetworkServer.active)
         {
             NetworkManager.singleton.StopServer();
