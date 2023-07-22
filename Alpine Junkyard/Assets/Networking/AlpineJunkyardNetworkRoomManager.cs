@@ -18,6 +18,18 @@ using Mirror;
 /// </summary>
 public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
 {
+    public void OnEnable()
+    {
+        var currentActiveTransport = FindFirstObjectByType<Transport>();
+
+        if (currentActiveTransport != null)
+        {
+            Debug.Log("Workaround because NetworkRoomManager loses the Transport when leaving a lobby");
+            transport = currentActiveTransport;
+            Transport.active = currentActiveTransport;
+        }
+    }
+
     #region Server Callbacks
 
     /// <summary>
