@@ -639,7 +639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3333385318105255194, guid: 0ccd1b65e76495d46b3e5e73165b834f, type: 3}
       propertyPath: useSteam
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

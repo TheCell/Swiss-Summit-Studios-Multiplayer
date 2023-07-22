@@ -12,12 +12,14 @@ public class SwissSummitStudiosMenuScripts
         var kcpTransport = GameObject.FindFirstObjectByType<KcpTransport>();
         var fizzySteamworks = GameObject.FindFirstObjectByType<FizzySteamworks>();
         var steamManager = GameObject.FindFirstObjectByType<SteamManager>();
+        var mainMenu = GameObject.FindFirstObjectByType<MainMenu>();
 
         if (roomManager.transport == fizzySteamworks)
         {
             kcpTransport.enabled = true;
             roomManager.transport = kcpTransport;
             fizzySteamworks.enabled = false;
+            mainMenu.useSteam = false;
             steamManager.enabled = false;
         }
         else
@@ -25,6 +27,7 @@ public class SwissSummitStudiosMenuScripts
             fizzySteamworks.enabled = true;
             steamManager.enabled = true;
             roomManager.transport = fizzySteamworks;
+            mainMenu.useSteam = true;
             kcpTransport.enabled = false;
         }
 
@@ -33,5 +36,6 @@ public class SwissSummitStudiosMenuScripts
         EditorUtility.SetDirty(kcpTransport);
         EditorUtility.SetDirty(fizzySteamworks);
         EditorUtility.SetDirty(steamManager);
+        EditorUtility.SetDirty(mainMenu);
     }
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject? landingPagePanel = null;
-    [SerializeField] private bool useSteam = false;
+    [SerializeField] public bool useSteam = false;
 
     protected Callback<LobbyCreated_t> lobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
