@@ -68,12 +68,18 @@ public class AlpineJunkyardNetworkRoomPlayer : NetworkRoomPlayer
     /// This is a hook that is invoked on all player objects when entering the room.
     /// <para>Note: isLocalPlayer is not guaranteed to be set until OnStartLocalPlayer is called.</para>
     /// </summary>
-    public override void OnClientEnterRoom() { }
+    public override void OnClientEnterRoom()
+    {
+        RedrawPlayerSlots();
+    }
 
     /// <summary>
     /// This is a hook that is invoked on all player objects when exiting the room.
     /// </summary>
-    public override void OnClientExitRoom() { }
+    public override void OnClientExitRoom()
+    {
+        RedrawPlayerSlots();
+    }
 
     #endregion
 
@@ -84,7 +90,11 @@ public class AlpineJunkyardNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     /// <param name="oldIndex">The old index value</param>
     /// <param name="newIndex">The new index value</param>
-    public override void IndexChanged(int oldIndex, int newIndex) { }
+    public override void IndexChanged(int oldIndex, int newIndex)
+    {
+        index = newIndex;
+        RedrawPlayerSlots();
+    }
 
     /// <summary>
     /// This is a hook that is invoked on clients when a RoomPlayer switches between ready or not ready.
@@ -93,6 +103,31 @@ public class AlpineJunkyardNetworkRoomPlayer : NetworkRoomPlayer
     /// <param name="oldReadyState">The old readyState value</param>
     /// <param name="newReadyState">The new readyState value</param>
     public override void ReadyStateChanged(bool oldReadyState, bool newReadyState) { }
+
+    #endregion
+
+
+    #region UI updates
+
+    private void RedrawPlayerSlots()
+    {
+        var lobbyMenu = FindFirstObjectByType<LobbyMenu>();
+        if (lobbyMenu == null)
+        {
+            Debug.Log("lobbyMenu not found");
+            return;
+        }
+
+        if (NetworkManager.singleton is NetworkRoomManager room)
+        {
+            lobbyMenu.ResetSlots();
+
+            for (int i = 0; i < room.roomSlots.Count; i++)
+            {
+                lobbyMenu.SetSlotPlayer(room.roomSlots[i].DisplayName, room.roomSlots[i].index);
+            }
+        }
+    }
 
     #endregion
 

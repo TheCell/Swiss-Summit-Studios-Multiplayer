@@ -62,7 +62,7 @@ public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
     {
         base.OnServerAddPlayer(conn);
 
-        var player = conn.identity.GetComponent<NetworkRoomPlayer>();
+        var player = conn.identity.GetComponent<AlpineJunkyardNetworkRoomPlayer>();
         if (player != null)
         {
             var playerName = $"Player {numPlayers}";
@@ -140,7 +140,7 @@ public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
     public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
     {
         var networkGamePlayer = gamePlayer.GetComponent<NetworkGamePlayer>();
-        var networkRoomPlayer = roomPlayer.GetComponent<NetworkRoomPlayer>();
+        var networkRoomPlayer = roomPlayer.GetComponent<AlpineJunkyardNetworkRoomPlayer>();
         networkGamePlayer.SetDisplayName(networkRoomPlayer.DisplayName);
         networkGamePlayer.gameObject.name = $"{networkGamePlayer.gameObject.name} ({networkRoomPlayer.DisplayName})";
         SetPlayerColor(networkGamePlayer.gameObject);
@@ -177,27 +177,47 @@ public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
     /// <summary>
     /// This is a hook to allow custom behaviour when the game client enters the room.
     /// </summary>
-    public override void OnRoomClientEnter() { }
+    public override void OnRoomClientEnter()
+    {
+        //Debug.Log("OnRoomClientEnter");
+        //RedrawPlayerSlots();
+        //Invoke(nameof(RedrawPlayerSlots), 1);
+    }
 
     /// <summary>
     /// This is a hook to allow custom behaviour when the game client exits the room.
     /// </summary>
-    public override void OnRoomClientExit() { }
+    public override void OnRoomClientExit()
+    {
+        //Debug.Log("OnRoomClientExit");
+        //RedrawPlayerSlots();
+    }
 
     /// <summary>
     /// This is called on the client when it connects to server.
     /// </summary>
-    public override void OnRoomClientConnect() { }
+    public override void OnRoomClientConnect()
+    {
+
+        //RedrawPlayerSlots();
+    }
 
     /// <summary>
     /// This is called on the client when disconnected from a server.
     /// </summary>
-    public override void OnRoomClientDisconnect() { }
+    public override void OnRoomClientDisconnect()
+    {
+        //RedrawPlayerSlots();
+    }
 
     /// <summary>
     /// This is called on the client when a client is started.
     /// </summary>
-    public override void OnRoomStartClient() { }
+    public override void OnRoomStartClient()
+    {
+        //Debug.Log("OnRoomStartClient");
+        //RedrawPlayerSlots();
+    }
 
     /// <summary>
     /// This is called on the client when the client stops.
@@ -208,6 +228,21 @@ public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
     /// This is called on the client when the client is finished loading a new networked scene.
     /// </summary>
     public override void OnRoomClientSceneChanged() { }
+
+    //private void RedrawPlayerSlots()
+    //{
+    //    var lobbyMenu = FindFirstObjectByType<LobbyMenu>();
+    //    if (lobbyMenu == null)
+    //    {
+    //        Debug.Log("lobbyMenu not found");
+    //        return;
+    //    }
+    //    for (int i = 0; i < roomSlots.Count; i++)
+    //    {
+    //        //roomSlots[i].index;
+    //        lobbyMenu.SetSlotPlayer(roomSlots[i].DisplayName, roomSlots[i].index);
+    //    }
+    //}
 
     #endregion
 
