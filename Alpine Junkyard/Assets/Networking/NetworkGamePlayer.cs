@@ -4,7 +4,33 @@ using UnityEngine.InputSystem;
 
 public class NetworkGamePlayer : NetworkBehaviour
 {
+    // animation variables for playerwalking
+    [SyncVar] public float _animationBlend;
+    [SyncVar] public float _inputMagnitude;
+    public string DisplayName { get => displayName; }
     public Color overlayColor = new Color(0, 0, 0, 0.5f);
+
+    [SyncVar][SerializeField] private string displayName = "Missing Name";
+
+    [Server]
+    public void SetDisplayName(string displayName)
+    {
+        this.displayName = displayName;
+    }
+
+    [Command]
+    public void CmdUpdateAnimations(float animationBlend, float inputMagnitude)
+    {
+        _animationBlend = animationBlend;
+        _inputMagnitude = inputMagnitude;
+    }
+
+    [Command]
+    public void CastSpell(Vector3 castingPosition, Quaternion castingRotation)
+    {
+        var tutorialObject = PooledTutorialObject.singleton.Get(castingPosition, castingRotation);
+        NetworkServer.Spawn(tutorialObject);
+    }
 
     public override void OnStartLocalPlayer()
     {
@@ -15,27 +41,6 @@ public class NetworkGamePlayer : NetworkBehaviour
         {
             playerInput.enabled = true;
         }
-    }
-
-    [SyncVar][SerializeField] private string displayName = "Missing Name";
-
-    public string DisplayName { get => displayName; }
-
-    [Server]
-    public void SetDisplayName(string displayName)
-    {
-        this.displayName = displayName;
-    }
-
-    // animation variables for playerwalking
-    [SyncVar] public float _animationBlend;
-    [SyncVar] public float _inputMagnitude;
-
-    [Command]
-    public void CmdUpdateAnimations(float animationBlend, float inputMagnitude)
-    {
-        _animationBlend = animationBlend;
-        _inputMagnitude = inputMagnitude;
     }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD

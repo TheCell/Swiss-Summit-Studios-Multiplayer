@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 #endif
 
+#nullable enable
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
 
@@ -104,7 +105,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
-        private Animator _animator;
+        private Animator? _animator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
@@ -143,6 +144,7 @@ namespace StarterAssets
             if (networkGamePlayer == null)
             {
                 Debug.LogError("The NetworkGamePlayer script is missing. Animations are played through this");
+                throw new MissingComponentException();
             }
             Debug.Log($"networkGamePlayer.isOwned: {networkGamePlayer.isOwned}");
 
@@ -184,6 +186,12 @@ namespace StarterAssets
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
             }
+
+            // TODO implement properly
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton0))
+            {
+                CastSpell();
+            }
         }
 
         private void LateUpdate()
@@ -211,7 +219,7 @@ namespace StarterAssets
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetBool(_animIDGrounded, Grounded);
+                _animator!.SetBool(_animIDGrounded, Grounded);
             }
         }
 
@@ -297,7 +305,7 @@ namespace StarterAssets
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
             // only update server with new vars for the player that is owning this
-            if (!networkGamePlayer.isLocalPlayer)
+            if (!networkGamePlayer!.isLocalPlayer)
             {
                 return;
             }
@@ -315,7 +323,7 @@ namespace StarterAssets
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDJump, false);
+                    _animator!.SetBool(_animIDJump, false);
                     _animator.SetBool(_animIDFreeFall, false);
                 }
 
@@ -334,7 +342,7 @@ namespace StarterAssets
                     // update animator if using character
                     if (_hasAnimator)
                     {
-                        _animator.SetBool(_animIDJump, true);
+                        _animator!.SetBool(_animIDJump, true);
                     }
                 }
 
@@ -359,7 +367,7 @@ namespace StarterAssets
                     // update animator if using character
                     if (_hasAnimator)
                     {
-                        _animator.SetBool(_animIDFreeFall, true);
+                        _animator!.SetBool(_animIDFreeFall, true);
                     }
                 }
 
@@ -372,6 +380,11 @@ namespace StarterAssets
             {
                 _verticalVelocity += Gravity * Time.deltaTime;
             }
+        }
+
+        private void CastSpell()
+        {
+            networkGamePlayer!.CastSpell(transform.position, transform.rotation * Quaternion.Euler(0, 90, 0));
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
@@ -426,7 +439,7 @@ namespace StarterAssets
                 //lastPos = transform.position;
                 //speedFromLastFrame = speed > 0.01f ? 3f : 0f;
 
-                _animator.SetFloat(_animIDSpeed, networkGamePlayer._animationBlend);
+                _animator!.SetFloat(_animIDSpeed, networkGamePlayer!._animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, networkGamePlayer._inputMagnitude);
             }
         }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 36500921948391434}
   - component: {fileID: 946069880507680848}
   - component: {fileID: 7076306635981442014}
+  - component: {fileID: 3781177924085920597}
   m_Layer: 0
   m_Name: RoomManager
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &946069880507680848
 MonoBehaviour:
@@ -56,10 +57,11 @@ MonoBehaviour:
   networkAddress: localhost
   maxConnections: 6
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 5223737639806943153, guid: bcfecba5d12f0984db2ef0d03ac1c179, type: 3}
+  playerPrefab: {fileID: 6251799514244759186, guid: bcfecba5d12f0984db2ef0d03ac1c179, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 1
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 6939123249238794833, guid: b40413b59d85d95438ada8edb2bf2f97, type: 3}
   snapshotSettings:
     bufferTimeMultiplier: 2
     catchupNegativeThreshold: -1
@@ -93,3 +95,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offsetX: 0
   offsetY: 0
+--- !u!114 &3781177924085920597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6837098826912852426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba7fb0d9b46bcf49ac373191c9c738b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6939123249238794833, guid: b40413b59d85d95438ada8edb2bf2f97, type: 3}
+  currentCount: 0

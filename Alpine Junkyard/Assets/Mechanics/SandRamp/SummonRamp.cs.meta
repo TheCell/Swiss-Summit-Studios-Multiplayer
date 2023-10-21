@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 9211f9c2fcff24448a1a1a760f25f0ac
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - rampPrefab: {fileID: 1962794285670055102, guid: b40413b59d85d95438ada8edb2bf2f97, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

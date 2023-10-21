@@ -2,6 +2,8 @@ using Mirror;
 using Shapes;
 using UnityEngine;
 
+#nullable enable
+
 public class PlayerColor : MonoBehaviour
 {
     Disc? playerColorDisc = null;
