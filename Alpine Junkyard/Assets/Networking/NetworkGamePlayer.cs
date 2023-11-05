@@ -18,6 +18,11 @@ public class NetworkGamePlayer : NetworkBehaviour
         this.displayName = displayName;
     }
 
+    public void PickupItem(SceneObject sceneObject)
+    {
+        NetworkClient.localPlayer.GetComponent<PlayerEquip>().CmdPickupItem(sceneObject.gameObject);
+    }
+
     [Command]
     public void CmdUpdateAnimations(float animationBlend, float inputMagnitude)
     {

@@ -77,6 +77,8 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
+        [SerializeField] private InteractableTracker interactableTracker;
+
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -102,6 +104,8 @@ namespace StarterAssets
 
         private NetworkGamePlayer? networkGamePlayer = null;
 
+        [SerializeField] private BoxCollider InteractionVolume;
+
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
@@ -125,7 +129,6 @@ namespace StarterAssets
 #endif
             }
         }
-
 
         private void Awake()
         {
@@ -188,8 +191,15 @@ namespace StarterAssets
             }
 
             // TODO implement properly
-            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton0))
+            if (Input.GetKeyDown(KeyCode.E))
             {
+                if (PickupItem())
+                {
+                    Debug.Log("Picked up item, no more spellcasting");
+                    return;
+                }
+
+                Debug.Log("no item found, casting spell");
                 CastSpell();
             }
         }
@@ -385,6 +395,19 @@ namespace StarterAssets
         private void CastSpell()
         {
             networkGamePlayer!.CastSpell(transform.position, transform.rotation * Quaternion.Euler(0, 90, 0));
+        }
+
+        private bool PickupItem()
+        {
+            if (interactableTracker.InteractableSceneObjects.Count > 0)
+            {
+                var sceneObject = interactableTracker.InteractableSceneObjects[0];
+                interactableTracker.InteractableSceneObjects.RemoveAt(0);
+                networkGamePlayer!.PickupItem(sceneObject);
+                return true;
+            }
+
+            return false;
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
