@@ -149,7 +149,6 @@ namespace StarterAssets
                 Debug.LogError("The NetworkGamePlayer script is missing. Animations are played through this");
                 throw new MissingComponentException();
             }
-            Debug.Log($"networkGamePlayer.isOwned: {networkGamePlayer.isOwned}");
 
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
@@ -183,6 +182,11 @@ namespace StarterAssets
                 AnimateWalking();
             }
 
+            if (!networkGamePlayer!.isLocalPlayer)
+            {
+                return;
+            }
+
             // TODO implement properly
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -195,11 +199,9 @@ namespace StarterAssets
             {
                 if (PickupItem())
                 {
-                    Debug.Log("Picked up item, no more spellcasting");
                     return;
                 }
 
-                Debug.Log("no item found, casting spell");
                 CastSpell();
             }
         }
