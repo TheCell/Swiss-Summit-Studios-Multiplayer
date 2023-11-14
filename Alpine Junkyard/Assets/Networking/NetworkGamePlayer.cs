@@ -8,14 +8,22 @@ public class NetworkGamePlayer : NetworkBehaviour
     [SyncVar] public float _animationBlend;
     [SyncVar] public float _inputMagnitude;
     public string DisplayName { get => displayName; }
+    public Color PlayerColor { get => playerColor; }
     public Color overlayColor = new Color(0, 0, 0, 0.5f);
 
     [SyncVar][SerializeField] private string displayName = "Missing Name";
+    [SyncVar][SerializeField] private Color playerColor = Color.cyan;
 
     [Server]
     public void SetDisplayName(string displayName)
     {
         this.displayName = displayName;
+    }
+
+    [Server]
+    public void SetPlayerColor(Color color)
+    {
+        this.playerColor = color;
     }
 
     public void PickupItem(SceneObject sceneObject)

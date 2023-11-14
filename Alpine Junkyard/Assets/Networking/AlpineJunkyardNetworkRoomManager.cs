@@ -68,6 +68,7 @@ public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
             var playerName = $"Player {numPlayers}";
             player.SetDisplayName(playerName);
             player.gameObject.name = $"{player.gameObject.name} ({playerName})";
+            player.SetPlayerColor(Random.ColorHSV(0, 1, 0.7f, 0.7f, 0.8f, 0.8f));
         }
         else
         {
@@ -143,7 +144,7 @@ public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
         var networkRoomPlayer = roomPlayer.GetComponent<AlpineJunkyardNetworkRoomPlayer>();
         networkGamePlayer.SetDisplayName(networkRoomPlayer.DisplayName);
         networkGamePlayer.gameObject.name = $"{networkGamePlayer.gameObject.name} ({networkRoomPlayer.DisplayName})";
-        SetPlayerColor(networkGamePlayer.gameObject);
+        networkGamePlayer.SetPlayerColor(networkRoomPlayer.PlayerColor);
         return base.OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer);
     }
 
@@ -245,15 +246,6 @@ public class AlpineJunkyardNetworkRoomManager : NetworkRoomManager
     //}
 
     #endregion
-
-    private void SetPlayerColor(GameObject playerObject)
-    {
-        var playerColor = playerObject.GetComponentInChildren<PlayerColor>();
-        if (playerColor != null)
-        {
-            playerColor.SetPlayerColor(Random.ColorHSV(0, 1, 0.7f, 0.7f, 0.8f, 0.8f));
-        }
-    }
 
     #region Optional UI
 

@@ -12,13 +12,21 @@ namespace Mirror
     public class NetworkRoomPlayer : NetworkBehaviour
     {
         [SyncVar][SerializeField] private string displayName = "Missing Name";
+        [SyncVar][SerializeField] private Color playerColor = Color.cyan;
 
         public string DisplayName { get => displayName; }
+        public Color PlayerColor { get => playerColor; }
 
         [Server]
         public void SetDisplayName(string displayName)
         {
             this.displayName = displayName;
+        }
+
+        [Server]
+        public void SetPlayerColor(Color color)
+        {
+            this.playerColor = color;
         }
 
         /// <summary>

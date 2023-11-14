@@ -9,7 +9,6 @@ public class PickupSpawner : NetworkBehaviour
         foreach (var sceneObject in sceneObjects)
         {
             sceneObject.SetEquippedItem(sceneObject.equippedItem);
-            //NetworkServer.Spawn(sceneObject.gameObject);
         }
 
         Destroy(this);

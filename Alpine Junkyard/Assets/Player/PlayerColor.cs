@@ -1,4 +1,3 @@
-using Mirror;
 using Shapes;
 using UnityEngine;
 
@@ -6,27 +5,21 @@ using UnityEngine;
 
 public class PlayerColor : MonoBehaviour
 {
-    Disc? playerColorDisc = null;
+    Disc playerColorDisc;
+    NetworkGamePlayer networkGamePlayer;
 
-    void OnEnable()
+    void Start()
     {
         playerColorDisc = GetComponent<Disc>();
-        if (playerColorDisc != null)
-        {
-            playerColorDisc.enabled = false;
-        }
-    }
+        networkGamePlayer = GetComponentInParent<NetworkGamePlayer>();
 
-    [Server]
-    public void SetPlayerColor(Color color)
-    {
-        if (playerColorDisc == null)
+        if (playerColorDisc != null && networkGamePlayer != null )
         {
-            Debug.LogError("No Disc object found to colorize");
-            return;
+            playerColorDisc.Color = networkGamePlayer.PlayerColor;
         }
-
-        playerColorDisc.enabled = true;
-        playerColorDisc.Color = color;
+        else
+        {
+            Debug.LogError("playerColorDisc or networkGamePlayer not found");
+        }
     }
 }
