@@ -3,9 +3,9 @@ using Mirror.FizzySteam;
 using UnityEditor;
 using UnityEngine;
 
-public class SwissSummitStudiosMenuScripts
+public class MenuScriptToggleNetworking
 {
-    [MenuItem("SSS/Toggle Networking %&s")]
+    [MenuItem("SSS/Networking/Toggle Networking %&s")]
     private static void ToggleNetworking()
     {
         var roomManager = GameObject.FindFirstObjectByType<AlpineJunkyardNetworkRoomManager>();
