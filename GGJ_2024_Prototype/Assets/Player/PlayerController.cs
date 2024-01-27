@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,9 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float _speed = 12f;
+    [SerializeField] float _jumpForce = 5f;
     private Rigidbody _rigidbody;
+    private bool _isGrounded;
 
     // Start is called before the first frame update
     public void Start()
@@ -26,15 +29,40 @@ public class PlayerController : MonoBehaviour
         _movementInputValue = context.ReadValue<Vector2>();
     }
 
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (_isGrounded)
+        {
+            _jumpRequested = true;
+        }
+    }
+
     private void FixedUpdate()
     {
         Move();
     }
 
+    bool _jumpRequested;
     Vector2 _movementInputValue;
     private void Move()
     {
         var movement = new Vector3(_movementInputValue.x, 0f, _movementInputValue.y) * _speed * Time.deltaTime;
         _rigidbody.MovePosition(_rigidbody.position + movement);
+
+        var jump = new Vector3(0f, _jumpRequested ? _jumpForce : 0f, 0f);
+        if (_jumpRequested)
+        {
+            _isGrounded = false;
+        }
+        _rigidbody.AddForce(jump, ForceMode.Impulse);
+        _jumpRequested = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            _isGrounded = true;
+        }
     }
 }
