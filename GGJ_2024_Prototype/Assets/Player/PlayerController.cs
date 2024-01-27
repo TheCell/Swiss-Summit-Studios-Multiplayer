@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float _speed = 12f;
     [SerializeField] float _jumpForce = 5f;
+    [SerializeField] Animator _animator;
     private Rigidbody _rigidbody;
     private bool _isGrounded;
 
@@ -16,6 +17,10 @@ public class PlayerController : MonoBehaviour
     public void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        if (_animator == null)
+        {
+            Debug.LogError("Animator not set");
+        }
     }
 
     // Update is called once per frame
@@ -47,9 +52,11 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         var movement = new Vector3(_movementInputValue.x, 0f, _movementInputValue.y) * _speed * Time.deltaTime;
+        _animator.SetFloat("Speed", movement.magnitude);
         _rigidbody.MovePosition(_rigidbody.position + movement);
 
         var jump = new Vector3(0f, _jumpRequested ? _jumpForce : 0f, 0f);
+        _animator.SetBool("isGrounded", _isGrounded);
         if (_jumpRequested)
         {
             _isGrounded = false;
