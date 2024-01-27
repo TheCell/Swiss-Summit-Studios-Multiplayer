@@ -108,9 +108,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 3.768737
+  m_Height: 1.8
   m_Direction: 1
-  m_Center: {x: 0, y: 1.8843685, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &5748590857396191366
 Rigidbody:
   m_ObjectHideFlags: 0
