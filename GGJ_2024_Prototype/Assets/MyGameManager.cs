@@ -28,7 +28,6 @@ public class MyGameManager : MonoBehaviour
 
     public void OnPlayerJoined(PlayerInput player)
     {
-        Debug.Log(player.gameObject);
         SetCameraTargets(player.gameObject);
     }
 
@@ -46,7 +45,6 @@ public class MyGameManager : MonoBehaviour
         //}
 
         //// These are the targets the camera should follow.
-        Debug.Log(_targets.ToArray().Length);
         m_CameraControl.m_Targets = _targets.ToArray();
     }
 }
