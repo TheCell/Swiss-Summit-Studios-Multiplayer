@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: 7361453163810937792}
+  _ghostSkinToHide: {fileID: 3605908557348834517}
   _scanChaseDistance: 10
   _maxChaseDistance: 30
   _scanInterval: 1
@@ -295,6 +296,10 @@ PrefabInstance:
     - target: {fileID: 1248798265982925786, guid: aeb71b6fec0b7df449f982f290bb1c6f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1248798265982925787, guid: aeb71b6fec0b7df449f982f290bb1c6f, type: 3}
+      propertyPath: lengthInSec
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1248798265982925787, guid: aeb71b6fec0b7df449f982f290bb1c6f, type: 3}
       propertyPath: playOnAwake
