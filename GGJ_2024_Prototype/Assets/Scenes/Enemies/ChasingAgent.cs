@@ -7,6 +7,8 @@ public class ChasingAgent : MonoBehaviour
     [SerializeField] float _scanChaseDistance = 10f;
     [SerializeField] float _maxChaseDistance = 40f;
     [SerializeField] float _scanInterval = 1f;
+    [SerializeField] ParticleSystem _explosion = null;
+    private float _killSelfTimestamp;
     private float _timestamp;
     private Transform _target;
     private bool exploding;
@@ -22,6 +24,10 @@ public class ChasingAgent : MonoBehaviour
     {
         if (exploding)
         {
+            if (_killSelfTimestamp < Time.time)
+            {
+                Destroy(gameObject);
+            }
             return;
         }
 
@@ -41,6 +47,11 @@ public class ChasingAgent : MonoBehaviour
         if (player != null)
         {
             exploding = true;
+            if (_explosion != null)
+            {
+                _explosion.Play();
+                _killSelfTimestamp = Time.time + _explosion.main.duration;
+            }
         }
     }
 
