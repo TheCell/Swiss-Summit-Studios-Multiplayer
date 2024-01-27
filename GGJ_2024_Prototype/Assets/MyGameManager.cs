@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 
 public class MyGameManager : MonoBehaviour
 {
-    public CameraControl m_CameraControl;
+    [SerializeField] private CameraControl m_CameraControl;
+    [SerializeField] private Color32[] playerColors;
     private List<Transform> _targets = new List<Transform>();
 
     // Start is called before the first frame update
