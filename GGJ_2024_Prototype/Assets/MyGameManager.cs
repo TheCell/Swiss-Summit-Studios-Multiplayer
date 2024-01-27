@@ -8,6 +8,8 @@ public class MyGameManager : MonoBehaviour
 {
     [SerializeField] private CameraControl m_CameraControl;
     [SerializeField] private Color32[] playerColors;
+    [SerializeField] private Transform[] startPositions;
+    private int _currentPositionIndex = 0;
     private List<Transform> _targets = new List<Transform>();
 
     // Start is called before the first frame update
@@ -21,30 +23,22 @@ public class MyGameManager : MonoBehaviour
 
     }
 
-    public void NewPlayerSpawned()
-    {
-
-    }
-
     public void OnPlayerJoined(PlayerInput player)
     {
+        var spawnPosition = startPositions[_currentPositionIndex].position;
+        player.transform.position = spawnPosition;
+        _currentPositionIndex++;
+        if (_currentPositionIndex >= startPositions.Length)
+        {
+            _currentPositionIndex = 0;
+        }
+
         SetCameraTargets(player.gameObject);
     }
 
     private void SetCameraTargets(GameObject gameObject)
     {
         _targets.Add(gameObject.transform);
-        //// Create a collection of transforms the same size as the number of tanks.
-        //Transform[] targets = new Transform[m_Tanks.Length];
-
-        //// For each of these transforms...
-        //for (int i = 0; i < targets.Length; i++)
-        //{
-        //    // ... set it to the appropriate tank transform.
-        //    targets[i] = m_Tanks[i].m_Instance.transform;
-        //}
-
-        //// These are the targets the camera should follow.
         m_CameraControl.m_Targets = _targets.ToArray();
     }
 }
