@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public GameObjectEvent onPlayerRespawned;
+    public float _respawnTime = 3f;
+    public bool IsDead => _isDead;
 
     [SerializeField] float _speed = 12f;
     [SerializeField] float _jumpForce = 5f;
@@ -115,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(_respawnTime);
         transform.position = Vector3.zero;
         _objectToDisable.SetActive(true);
         _hasHitRespawnTrigger = false;
