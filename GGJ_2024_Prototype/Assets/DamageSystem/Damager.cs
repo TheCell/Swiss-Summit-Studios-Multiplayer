@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Damager : MonoBehaviour
 {
-    [SerializeField] bool _doesAoEDamage = false;
+    [SerializeField] bool _doesAoeDamage = false;
     [SerializeField] int _damageAmount = 1;
     [SerializeField] float _damageRadius = 5f;
 
     public void ApplyDamageToOthers()
     {
-        if (_doesAoEDamage)
+        if (_doesAoeDamage)
         {
             ApplyAoeDamage();
         }
