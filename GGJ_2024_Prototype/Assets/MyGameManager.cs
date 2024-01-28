@@ -25,20 +25,35 @@ public class MyGameManager : MonoBehaviour
 
     public void OnPlayerJoined(PlayerInput player)
     {
-        var spawnPosition = startPositions[_currentPositionIndex].position;
+        var spawnPosition = GetNextSpawn().position;
         player.transform.position = spawnPosition;
-        _currentPositionIndex++;
-        if (_currentPositionIndex >= startPositions.Length)
-        {
-            _currentPositionIndex = 0;
-        }
 
         SetCameraTargets(player.gameObject);
+
+        player.GetComponent<PlayerController>().onPlayerRespawned += OnPlayerRespawned;
+    }
+
+    public void OnPlayerRespawned(GameObject player)
+    {
+        var spawnPosition = GetNextSpawn().position;
+        player.transform.position = spawnPosition;
     }
 
     private void SetCameraTargets(GameObject gameObject)
     {
         _targets.Add(gameObject.transform);
         m_CameraControl.m_Targets = _targets.ToArray();
+    }
+
+    private Transform GetNextSpawn()
+    {
+        var spawnPosition = startPositions[_currentPositionIndex];
+        _currentPositionIndex++;
+        if (_currentPositionIndex >= startPositions.Length)
+        {
+            _currentPositionIndex = 0;
+        }
+
+        return spawnPosition;
     }
 }

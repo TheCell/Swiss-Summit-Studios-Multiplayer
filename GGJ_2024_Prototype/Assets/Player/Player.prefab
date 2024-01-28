@@ -222,6 +222,7 @@ MonoBehaviour:
   _speed: 12
   _jumpForce: 4
   _animator: {fileID: 4823455423645577681}
+  _objectToDisable: {fileID: 2259583664312480017}
 --- !u!114 &5748590857396191367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,6 +466,11 @@ PrefabInstance:
 --- !u!4 &1445787363416386475 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 085b0bc39950fe744a63f57150bce957, type: 3}
+  m_PrefabInstance: {fileID: 1412668547105279040}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2259583664312480017 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 085b0bc39950fe744a63f57150bce957, type: 3}
   m_PrefabInstance: {fileID: 1412668547105279040}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &4823455423645577681 stripped

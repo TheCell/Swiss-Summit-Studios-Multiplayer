@@ -7,6 +7,7 @@ TagManager:
   - CinemachineTarget
   - Ground
   - Collectible
+  - Killtrigger
   layers:
   - Default
   - TransparentFX
