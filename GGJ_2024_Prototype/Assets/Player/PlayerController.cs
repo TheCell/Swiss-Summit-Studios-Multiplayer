@@ -57,8 +57,6 @@ public class PlayerController : MonoBehaviour
     public void StartRespawn()
     {
         _isDead = true;
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.angularVelocity = Vector3.zero;
         _rigidbody.isKinematic = true;
         StartCoroutine(Respawn());
         _objectToDisable.SetActive(false);
@@ -123,6 +121,8 @@ public class PlayerController : MonoBehaviour
         _hasHitRespawnTrigger = false;
         _isDead = false;
         _rigidbody.isKinematic = false;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
         onPlayerRespawned?.Invoke(gameObject);
     }
 }
