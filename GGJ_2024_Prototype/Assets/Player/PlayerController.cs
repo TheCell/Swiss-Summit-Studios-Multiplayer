@@ -8,16 +8,19 @@ public class PlayerController : MonoBehaviour
     public GameObjectEvent onPlayerRespawned;
     public float _respawnTime = 3f;
     public bool IsDead => _isDead;
+    public bool HasLantern => _hasLantern;
 
     [SerializeField] float _speed = 12f;
     [SerializeField] float _jumpForce = 5f;
     [SerializeField] Animator _animator;
     [SerializeField] GameObject _playerAvatar;
+    [SerializeField] GameObject _lanternItem;
 
     private Rigidbody _rigidbody;
     private bool _isGrounded;
     private bool _hasHitRespawnTrigger;
     private bool _isDead;
+    private bool _hasLantern;
 
     // Start is called before the first frame update
     public void Start()
@@ -64,9 +67,28 @@ public class PlayerController : MonoBehaviour
         _playerAvatar.SetActive(false);
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
         Move();
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            _isGrounded = true;
+        }
+
+        if (collision.gameObject.CompareTag("Killtrigger"))
+        {
+            _hasHitRespawnTrigger = true;
+        }
+    }
+
+    public void PickupLantern()
+    {
+        _hasLantern = true;
+        _lanternItem.SetActive(true);
     }
 
     bool _jumpRequested;
@@ -89,19 +111,6 @@ public class PlayerController : MonoBehaviour
         if (movement.magnitude > 0f)
         {
             _playerAvatar.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            _isGrounded = true;
-        }
-
-        if (collision.gameObject.CompareTag("Killtrigger"))
-        {
-            _hasHitRespawnTrigger = true;
         }
     }
 
