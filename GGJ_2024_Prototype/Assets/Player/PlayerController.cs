@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _speed = 12f;
     [SerializeField] float _jumpForce = 5f;
     [SerializeField] Animator _animator;
-    [SerializeField] GameObject _objectToDisable;
+    [SerializeField] GameObject _playerAvatar;
 
     private Rigidbody _rigidbody;
     private bool _isGrounded;
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
         _isDead = true;
         _rigidbody.isKinematic = true;
         StartCoroutine(Respawn());
-        _objectToDisable.SetActive(false);
+        _playerAvatar.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -85,6 +85,11 @@ public class PlayerController : MonoBehaviour
         }
         _rigidbody.AddForce(jump, ForceMode.Impulse);
         _jumpRequested = false;
+
+        if (movement.magnitude > 0f)
+        {
+            _playerAvatar.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -119,7 +124,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(_respawnTime);
         transform.position = Vector3.zero;
-        _objectToDisable.SetActive(true);
+        _playerAvatar.SetActive(true);
         _hasHitRespawnTrigger = false;
         _isDead = false;
         _rigidbody.isKinematic = false;
