@@ -112,7 +112,7 @@ MonoBehaviour:
   Distance: 20
   BoundsRadius: 0.4
   Translating:
-    Blend: 0.2
+    Blend: 5
     BlendShape: 0
     Centering: 1
     Border: 0
