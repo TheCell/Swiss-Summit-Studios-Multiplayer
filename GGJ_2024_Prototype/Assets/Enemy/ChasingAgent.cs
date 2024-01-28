@@ -60,7 +60,6 @@ public class ChasingAgent : MonoBehaviour
                 _ghostSkinToHide.SetActive(false);
             }
 
-            Debug.Log("calling onExplosion");
             onExplosion?.Invoke();
             _killSelfTimestamp = Time.time + _explosion.main.duration;
         }
