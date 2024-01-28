@@ -36,7 +36,7 @@ public class Activatable : MonoBehaviour
 
     private void CheckAndActivateLantern()
     {
-        if (_buttonToBePressed.activeSelf)
+        if (!_buttonToBePressed.activeSelf)
         {
             return;
         }
