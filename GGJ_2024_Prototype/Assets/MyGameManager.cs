@@ -1,5 +1,4 @@
 using Complete;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,25 +11,13 @@ public class MyGameManager : MonoBehaviour
     private int _currentPositionIndex = 0;
     private List<Transform> _targets = new List<Transform>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void OnPlayerJoined(PlayerInput player)
     {
         var spawnPosition = GetNextSpawn().position;
         player.transform.position = spawnPosition;
 
         SetCameraTargets(player.gameObject);
-
-        player.GetComponent<PlayerController>().onPlayerRespawned += OnPlayerRespawned;
+        player.GetComponent<PlayerController>().onPlayerRespawned.AddListener(OnPlayerRespawned);
     }
 
     public void OnPlayerRespawned(GameObject player)

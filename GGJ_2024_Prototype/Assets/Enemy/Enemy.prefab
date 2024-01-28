@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3605908556559398421}
   - component: {fileID: 5872787245639238960}
   - component: {fileID: 7361453163810937792}
+  - component: {fileID: 2932525980194382279}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -48,6 +49,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f510efff5a262b248b7f83416c1aaf0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onExplosion:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2932525980194382279}
+        m_TargetAssemblyTypeName: Damager, Assembly-CSharp
+        m_MethodName: ApplyDamageToOthers
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _agent: {fileID: 7361453163810937792}
   _ghostSkinToHide: {fileID: 3605908557348834517}
   _scanChaseDistance: 10
@@ -99,6 +115,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2932525980194382279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3605908556559398423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f57d32d6ff9f7a47b6d46c36fa17572, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _doesAoEDamage: 1
+  _damageAmount: 4
+  _damageRadius: 5
 --- !u!1 &3605908557348834517
 GameObject:
   m_ObjectHideFlags: 0

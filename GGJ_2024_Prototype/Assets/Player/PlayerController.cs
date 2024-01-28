@@ -1,14 +1,11 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    public delegate void OnPlayerRespawned(GameObject player);
-    public OnPlayerRespawned onPlayerRespawned;
+    public GameObjectEvent onPlayerRespawned;
 
     [SerializeField] float _speed = 12f;
     [SerializeField] float _jumpForce = 5f;
@@ -55,6 +52,16 @@ public class PlayerController : MonoBehaviour
         {
             _jumpRequested = true;
         }
+    }
+
+    public void StartRespawn()
+    {
+        _isDead = true;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
+        _rigidbody.isKinematic = true;
+        StartCoroutine(Respawn());
+        _objectToDisable.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -106,16 +113,6 @@ public class PlayerController : MonoBehaviour
         }
 
         return false;
-    }
-
-    private void StartRespawn()
-    {
-        _isDead = true;
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.angularVelocity = Vector3.zero;
-        _rigidbody.isKinematic = true;
-        StartCoroutine(Respawn());
-        _objectToDisable.SetActive(false);
     }
 
     private IEnumerator Respawn()

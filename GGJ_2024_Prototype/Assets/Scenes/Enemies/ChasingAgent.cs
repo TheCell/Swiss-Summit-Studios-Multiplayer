@@ -3,6 +3,8 @@ using UnityEngine.AI;
 
 public class ChasingAgent : MonoBehaviour
 {
+    public VoidEvent onExplosion;
+
     [SerializeField] NavMeshAgent _agent = null;
     [SerializeField] GameObject _ghostSkinToHide = null;
     [SerializeField] float _scanChaseDistance = 10f;
@@ -57,6 +59,8 @@ public class ChasingAgent : MonoBehaviour
             {
                 _ghostSkinToHide.SetActive(false);
             }
+
+            onExplosion?.Invoke();
             _killSelfTimestamp = Time.time + _explosion.main.duration;
         }
     }
